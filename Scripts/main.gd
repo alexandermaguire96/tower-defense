@@ -2,17 +2,17 @@ extends Node2D
 
 @onready var coin_label = $CoinLabel
 
-const TowerScene = preload("res://Scenes/Tower.tscn")
 var towers = {}
 var lives = 5.0
 var coins = 100
+
 const TOWER_COST = 30
 
+@export var tower_pool: Array[PackedScene]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -37,8 +37,9 @@ func _unhandled_input(event):
 					if coins < TOWER_COST:
 						return
 					coins -= TOWER_COST
-						
-					var tower_instance = TowerScene.instantiate()
+					
+					var tower_scene = tower_pool.pick_random()	
+					var tower_instance = tower_scene.instantiate()
 					
 					var tile_center = $Ground.map_to_local(tile_pos)
 					tower_instance.position = tile_center

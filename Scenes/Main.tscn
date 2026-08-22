@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://dkoyv6jurs3r8"]
+[gd_scene load_steps=10 format=4 uid="uid://dkoyv6jurs3r8"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_x866i"]
 [ext_resource type="Script" path="res://Scripts/ground.gd" id="2_5aee3"]
+[ext_resource type="PackedScene" uid="uid://d3udiepjk801b" path="res://Scenes/Tower.tscn" id="2_hbm1o"]
 [ext_resource type="TileSet" uid="uid://cro255nnhikxm" path="res://TileSets/GroundTileSet.tres" id="2_jqh66"]
 [ext_resource type="Script" path="res://Scripts/tile_highlight.gd" id="3_f3tg5"]
 [ext_resource type="PackedScene" uid="uid://dfcpanvfaiolw" path="res://Scenes/Enemy.tscn" id="3_hscgk"]
@@ -16,6 +17,7 @@ point_count = 15
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_x866i")
+tower_pool = Array[PackedScene]([ExtResource("2_hbm1o")])
 
 [node name="TileHighlight" type="Node2D" parent="." node_paths=PackedStringArray("tile_map")]
 z_index = 100
