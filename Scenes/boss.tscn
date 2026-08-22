@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://dag2m0xenpa2r"]
+
+[ext_resource type="Script" path="res://Scripts/boss.gd" id="1_xsgy5"]
+[ext_resource type="Texture2D" uid="uid://cnd7dct63i8ty" path="res://art/IMG_8171.jpg" id="2_ftr0p"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6etbf"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+inherit_velocity_ratio = 0.045
+spread = 180.0
+initial_velocity_min = 43.17
+initial_velocity_max = 43.17
+angular_velocity_min = 148.49
+angular_velocity_max = 148.49
+radial_velocity_min = -2.28002
+radial_velocity_max = 137.68
+gravity = Vector3(0, -98, 0)
+linear_accel_min = -59.95
+linear_accel_max = -59.95
+radial_accel_min = -2.23517e-06
+radial_accel_max = -2.23517e-06
+damping_max = 5.995
+scale_min = 2.2
+scale_max = 19.68
+color = Color(1, 0.101961, 0.498039, 1)
+hue_variation_min = 0.04
+hue_variation_max = 1.0
+anim_speed_min = 1.07
+anim_speed_max = 1.07
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3mowg"]
+radius = 32.0156
+
+[node name="Boss" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_xsgy5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.0249421, 0.0249421)
+texture = ExtResource("2_ftr0p")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D"]
+show_behind_parent = true
+light_mask = 0
+scale = Vector2(10.63, 10.63)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_6etbf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3mowg")

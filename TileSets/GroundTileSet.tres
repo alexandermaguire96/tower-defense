@@ -1,0 +1,27 @@
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://cro255nnhikxm"]
+
+[ext_resource type="Texture2D" uid="uid://bwh6vqrrsol53" path="res://art/prototype_tiles.png" id="1_jnvx2"]
+[ext_resource type="Texture2D" uid="uid://b8flov335lq75" path="res://art/Outline.png" id="2_eshej"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_srpbv"]
+texture = ExtResource("1_jnvx2")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/custom_data_1 = true
+1:0/0 = 0
+1:0/0/custom_data_0 = true
+2:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2nadm"]
+texture = ExtResource("2_eshej")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[resource]
+tile_size = Vector2i(64, 64)
+custom_data_layer_0/name = "is_path"
+custom_data_layer_0/type = 1
+custom_data_layer_1/name = "is_buildable"
+custom_data_layer_1/type = 1
+sources/1 = SubResource("TileSetAtlasSource_srpbv")
+sources/4 = SubResource("TileSetAtlasSource_2nadm")
