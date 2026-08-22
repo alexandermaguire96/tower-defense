@@ -6,7 +6,7 @@ signal died
 
 var health := 1000.0
 
-func _process(delta):
+func _process(_delta):
 	global_rotation = 0
 	
 func take_damage(amount: float) -> void:

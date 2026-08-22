@@ -2,12 +2,16 @@ extends Node2D
 
 @export var projectile_scene: PackedScene
 
-@export var attack_speed = 1.0
-@export var attack_damage = 50.0
-@export var crit_chance = 0.0
-@export var crit_damage = 150.0
-@export var tower_range = 2.0
-@export var base_range = 100.0
+@export var tower_type: String = "basic"
+@export var tier: int = 1
+
+@export var attack_speed: float = 1.0
+@export var attack_damage: float = 50.0
+@export var crit_chance: float =  0.0
+@export var crit_damage: float =  150.0
+@export var tower_range: float =  2.0
+@export var base_range: float = 100.0
+
 
 var enemies_in_range = []
 var target = null
@@ -21,17 +25,13 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
-
 func _on_area_2d_body_entered(_body: Node2D) -> void:
 	pass
-
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	enemies_in_range.append(area)
 	update_target()
 	
-
-
 func _on_area_2d_area_exited(area: Area2D) -> void:
 		enemies_in_range.erase(area)
 		
@@ -64,7 +64,6 @@ func update_target() -> void:
 		
 	#print("Target: ", target.name, " Progress: ", highest_progress)
 		
-
 
 func _on_attack_timer_timeout() -> void:
 	if target == null:

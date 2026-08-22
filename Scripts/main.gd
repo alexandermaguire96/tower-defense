@@ -1,14 +1,20 @@
 extends Node2D
 
 @onready var coin_label = $CoinLabel
+@onready var tower_actions = $TowerActions
 
 var towers = {}
 var lives = 5.0
 var coins = 100
+var selected_tower = null
 
 const TOWER_COST = 30
 
-@export var tower_pool: Array[PackedScene]
+@export var tier_1_pool: Array[PackedScene]
+@export var tier_2_pool: Array[PackedScene]
+@export var tier_3_pool: Array[PackedScene]
+@export var tier_4_pool: Array[PackedScene]
+@export var tier_5_pool: Array[PackedScene]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,14 +37,30 @@ func _unhandled_input(event):
 				
 				if is_buildable:
 					if towers.has(tile_pos):
-						print("There is already a tower here!")
+						selected_tower = towers[tile_pos]
+						print("Selected tower: ", selected_tower)
+						print("showing tower actions")
+						
+						var tower_position = selected_tower.global_position
+						
+						var reroll = tower_actions.get_node("Reroll")
+						var merge = tower_actions.get_node("Merge")
+						
+						var button_width = reroll.size.x * reroll.scale.x
+						var button_height = reroll.size.y * reroll.scale.y
+						
+						reroll.position = tower_position + Vector2(-button_width / 2, -button_height - 40)
+						merge.position = tower_position + Vector2(-button_width / 2, 40)
+						
+						merge.hide()
+						tower_actions.show()
 						return
 					
 					if coins < TOWER_COST:
 						return
 					coins -= TOWER_COST
 					
-					var tower_scene = tower_pool.pick_random()	
+					var tower_scene = tier_1_pool.pick_random()	
 					var tower_instance = tower_scene.instantiate()
 					
 					var tile_center = $Ground.map_to_local(tile_pos)
@@ -61,15 +83,10 @@ func game_over() -> void:
 	$LoseScreen.show()
 	get_tree().paused = true
 	
-
-
 func _on_button_pressed() -> void:
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 	
-
-
-
 func _on_enemy_path_game_won() -> void:
 	print("YOU WIN")
 	$WinScreen.show()
@@ -77,3 +94,4 @@ func _on_enemy_path_game_won() -> void:
 	
 func add_coins(amount: int) -> void:
 	coins += amount
+	
