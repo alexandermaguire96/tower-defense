@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://dkoyv6jurs3r8"]
+[gd_scene load_steps=11 format=4 uid="uid://dkoyv6jurs3r8"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_x866i"]
 [ext_resource type="Script" path="res://Scripts/ground.gd" id="2_5aee3"]
@@ -6,18 +6,19 @@
 [ext_resource type="TileSet" uid="uid://cro255nnhikxm" path="res://TileSets/GroundTileSet.tres" id="2_jqh66"]
 [ext_resource type="Script" path="res://Scripts/tile_highlight.gd" id="3_f3tg5"]
 [ext_resource type="PackedScene" uid="uid://dfcpanvfaiolw" path="res://Scenes/Enemy.tscn" id="3_hscgk"]
+[ext_resource type="PackedScene" uid="uid://bxhwt70ygynm3" path="res://Scenes/FastTower.tscn" id="3_yompe"]
 [ext_resource type="Script" path="res://Scripts/enemy_path.gd" id="5_5ase0"]
 [ext_resource type="PackedScene" uid="uid://dag2m0xenpa2r" path="res://Scenes/boss.tscn" id="7_7ul00"]
 
 [sub_resource type="Curve2D" id="Curve2D_wfkrj"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 225, 641, 0, 0, 0, 0, 225, 485, 0, 0, 0, 0, 225, 164, 0, 0, 0, 0, 347, 163, 0, 0, 0, 0, 349, 544, 0, 0, 0, 0, 451, 546, 0, 0, 0, 0, 546, 545, 0, 0, 0, 0, 544, 423, 0, 0, 0, 0, 547, 126, 0, 0, 0, 0, 550, 95, 0, 0, 0, 0, 803, 95, 0, 0, 0, 0, 799, 545, 0, 0, 0, 0, 995, 545, 0, 0, 0, 0, 996, 288, 0, 0, 0, 0, 1152, 287)
+"points": PackedVector2Array(0, 0, 0, 0, 226, 640, 0, 0, 0, 0, 226, 488, 0, 0, 0, 0, 226, 160, 0, 0, 0, 0, 354, 160, 0, 0, 0, 0, 354, 544, 0, 0, 0, 0, 450, 544, 0, 0, 0, 0, 546, 544, 0, 0, 0, 0, 546, 424, 0, 0, 0, 0, 546, 120, 0, 0, 0, 0, 546, 96, 0, 0, 0, 0, 802, 96, 0, 0, 0, 0, 802, 544, 0, 0, 0, 0, 994, 544, 0, 0, 0, 0, 994, 288, 0, 0, 0, 0, 1154, 288)
 }
 point_count = 15
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_x866i")
-tower_pool = Array[PackedScene]([ExtResource("2_hbm1o")])
+tower_pool = Array[PackedScene]([ExtResource("2_hbm1o"), ExtResource("3_yompe")])
 
 [node name="TileHighlight" type="Node2D" parent="." node_paths=PackedStringArray("tile_map")]
 z_index = 100

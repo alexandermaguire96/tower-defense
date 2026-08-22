@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dag2m0xenpa2r"]
 
 [ext_resource type="Script" path="res://Scripts/boss.gd" id="1_xsgy5"]
-[ext_resource type="Texture2D" uid="uid://cnd7dct63i8ty" path="res://art/IMG_8171.jpg" id="2_ftr0p"]
+[ext_resource type="Texture2D" uid="uid://brdw070v4exox" path="res://art/Vacuum.png" id="2_fycsj"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6etbf"]
 lifetime_randomness = 1.0
@@ -36,8 +36,9 @@ collision_layer = 2
 script = ExtResource("1_xsgy5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.0249421, 0.0249421)
-texture = ExtResource("2_ftr0p")
+position = Vector2(2, -21)
+scale = Vector2(0.0200326, 0.0200326)
+texture = ExtResource("2_fycsj")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D"]
 show_behind_parent = true
