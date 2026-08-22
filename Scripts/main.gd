@@ -1,9 +1,12 @@
 extends Node2D
 
+@onready var coin_label = $CoinLabel
 
 const TowerScene = preload("res://Scenes/Tower.tscn")
 var towers = {}
 var lives = 5.0
+var coins = 100
+const TOWER_COST = 30
 
 
 # Called when the node enters the scene tree for the first time.
@@ -13,7 +16,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
+	coin_label.text = "Coins: " + str(coins)
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
@@ -30,6 +33,10 @@ func _unhandled_input(event):
 					if towers.has(tile_pos):
 						print("There is already a tower here!")
 						return
+					
+					if coins < TOWER_COST:
+						return
+					coins -= TOWER_COST
 						
 					var tower_instance = TowerScene.instantiate()
 					
@@ -66,3 +73,6 @@ func _on_enemy_path_game_won() -> void:
 	print("YOU WIN")
 	$WinScreen.show()
 	get_tree().paused = true
+	
+func add_coins(amount: int) -> void:
+	coins += amount

@@ -105,6 +105,12 @@ vertical_alignment = 1
 layout_mode = 2
 text = "RETRY"
 
+[node name="CoinLabel" type="Label" parent="."]
+z_index = 100
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Coins : 100"
+
 [connection signal="enemy_leaked" from="EnemyPath" to="." method="_on_enemy_path_enemy_leaked"]
 [connection signal="game_won" from="EnemyPath" to="." method="_on_enemy_path_game_won"]
 [connection signal="timeout" from="EnemyPath/SpawnRate" to="EnemyPath" method="_on_spawn_timer_timeout"]

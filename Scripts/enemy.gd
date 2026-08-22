@@ -12,5 +12,6 @@ func take_damage(amount: float) -> void:
 		
 func die() -> void:
 	print("Enemy died")
+	get_tree().current_scene.add_coins(10)
 	get_parent().queue_free()
 	

@@ -3,7 +3,7 @@ extends Node2D
 @export var projectile_scene: PackedScene
 
 var attack_speed = 1.0
-var attack_damage = 5000.0
+var attack_damage = 50.0
 var crit_chance = 0.0
 var crit_damage = 150.0
 var tower_range = 2.0

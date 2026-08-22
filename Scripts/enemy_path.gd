@@ -9,7 +9,7 @@ signal game_won
 @export var wave_delay := 5.0
 @export var boss_wave_delay := 10.0
 
-var current_wave := 59
+var current_wave := 1
 var max_waves := 60
 var enemies_spawned := 0
 var enemies_per_wave := 10
