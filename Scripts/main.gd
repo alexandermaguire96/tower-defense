@@ -59,7 +59,6 @@ func _unhandled_input(event):
 						reroll.position = tower_position + Vector2(-button_width / 2, -button_height - 40)
 						merge.position = tower_position + Vector2(-button_width / 2, 40)
 						
-						#merge.hide()
 						tower_actions.show()
 						return
 					
@@ -113,3 +112,57 @@ func find_matching_tower() -> Node2D:
 			return tower
 			
 	return null
+
+func merge_towers() -> void:
+	var matching_tower = find_matching_tower()
+	
+	if matching_tower == null:
+		return
+		
+	var selected_position = selected_tower.position
+	var selected_tile = $Ground.local_to_map(
+		$Ground.to_local(selected_tower.global_position)
+	)
+	
+	var matching_tile
+	
+	for tile_pos in towers:
+		if towers[tile_pos] == matching_tower:
+			matching_tile = tile_pos
+			break
+	
+	var current_tier = selected_tower.tier
+	
+	towers.erase(selected_tile)
+	towers.erase(matching_tile)
+	
+	selected_tower.queue_free()
+	matching_tower.queue_free()
+	
+	var next_tier_pool
+	
+	match current_tier:
+		1:
+			next_tier_pool = tier_2_pool
+		2:
+			next_tier_pool = tier_3_pool
+		3:
+			next_tier_pool = tier_4_pool
+		4:
+			next_tier_pool = tier_5_pool
+		5:
+			return
+
+	var new_tower_scene = next_tier_pool.pick_random()
+	var new_tower = new_tower_scene.instantiate()
+
+	new_tower.position = selected_position
+	add_child(new_tower)
+
+	towers[selected_tile] = new_tower
+
+	selected_tower = null
+	tower_actions.hide()
+
+func _on_merge_pressed() -> void:
+	merge_towers()

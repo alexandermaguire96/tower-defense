@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://dkoyv6jurs3r8"]
+[gd_scene load_steps=11 format=4 uid="uid://dkoyv6jurs3r8"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_x866i"]
 [ext_resource type="PackedScene" uid="uid://d3udiepjk801b" path="res://Scenes/Tower.tscn" id="2_hbm1o"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/tile_highlight.gd" id="3_f3tg5"]
 [ext_resource type="PackedScene" uid="uid://dfcpanvfaiolw" path="res://Scenes/Enemy.tscn" id="3_hscgk"]
 [ext_resource type="PackedScene" uid="uid://bxhwt70ygynm3" path="res://Scenes/FastTower.tscn" id="3_yompe"]
+[ext_resource type="PackedScene" uid="uid://bvvvuaf04x1sd" path="res://Scenes/Tower_2.tscn" id="4_ubwwm"]
 [ext_resource type="Script" path="res://Scripts/enemy_path.gd" id="5_5ase0"]
 [ext_resource type="PackedScene" uid="uid://dag2m0xenpa2r" path="res://Scenes/boss.tscn" id="7_7ul00"]
 
@@ -18,6 +19,7 @@ point_count = 15
 [node name="Main" type="Node2D"]
 script = ExtResource("1_x866i")
 tier_1_pool = Array[PackedScene]([ExtResource("3_yompe"), ExtResource("2_hbm1o")])
+tier_2_pool = Array[PackedScene]([ExtResource("4_ubwwm")])
 
 [node name="TileHighlight" type="Node2D" parent="." node_paths=PackedStringArray("tile_map")]
 z_index = 100
@@ -141,3 +143,4 @@ vertical_icon_alignment = 0
 [connection signal="timeout" from="EnemyPath/WaveDelay" to="EnemyPath" method="_on_wave_timer_timeout"]
 [connection signal="pressed" from="LoseScreen/Panel/VBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="WinScreen/Panel/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="TowerActions/Merge" to="." method="_on_merge_pressed"]
