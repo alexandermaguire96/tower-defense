@@ -46,13 +46,20 @@ func _unhandled_input(event):
 						var reroll = tower_actions.get_node("Reroll")
 						var merge = tower_actions.get_node("Merge")
 						
+						var matching_tower = find_matching_tower()
+
+						if matching_tower:
+							merge.visible = true
+						else:
+							merge.visible = false
+						
 						var button_width = reroll.size.x * reroll.scale.x
 						var button_height = reroll.size.y * reroll.scale.y
 						
 						reroll.position = tower_position + Vector2(-button_width / 2, -button_height - 40)
 						merge.position = tower_position + Vector2(-button_width / 2, 40)
 						
-						merge.hide()
+						#merge.hide()
 						tower_actions.show()
 						return
 					
@@ -95,3 +102,14 @@ func _on_enemy_path_game_won() -> void:
 func add_coins(amount: int) -> void:
 	coins += amount
 	
+func find_matching_tower() -> Node2D:
+	for tile_pos in towers:
+		var tower = towers[tile_pos]
+		
+		if tower == selected_tower:
+			continue
+			
+		if tower.tower_type == selected_tower.tower_type and tower.tier == selected_tower.tier:
+			return tower
+			
+	return null
