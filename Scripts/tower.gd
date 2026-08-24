@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var sprite = $Sprite2D
+var glow: Sprite2D
 
 @export var projectile_scene: PackedScene
 
@@ -22,7 +23,9 @@ var target = null
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Area2D/CollisionShape2D.shape.radius = tower_range * base_range
-
+	
+	setup_glow()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
@@ -88,3 +91,24 @@ func attack(target):
 	projectile.target = target
 	projectile.damage = attack_damage
 	
+func setup_glow() -> void:
+	if tier == 1:
+		return 
+		
+	glow = Sprite2D.new()
+	glow.texture = sprite.texture
+	glow.show_behind_parent = true
+	glow.scale = sprite.scale * 1.15
+	add_child(glow)
+
+	match tier:
+		2:
+			glow.modulate = Color.GREEN
+		3:
+			glow.modulate = Color.BLUE
+		4:
+			glow.modulate = Color.MEDIUM_PURPLE
+		5:
+			glow.modulate = Color.RED
+		
+			
