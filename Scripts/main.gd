@@ -1,14 +1,24 @@
 extends Node2D
 
 @onready var coin_label = $CoinLabel
+@onready var gem_label = $GemLabel
+@onready var wave_label = $WaveLabel
 @onready var tower_actions = $TowerActions
 
 var towers = {}
 var lives = 5.0
 var coins = 100
+var gems = 30
 var selected_tower = null
 
 const TOWER_COST = 30
+const REROLL_COSTS = {
+	1:10,
+	2:15,
+	3:20,
+	4:25,
+	5:30
+}
 
 @export var tier_1_pool: Array[PackedScene]
 @export var tier_2_pool: Array[PackedScene]
@@ -23,6 +33,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	coin_label.text = "Coins: " + str(coins)
+	gem_label.text = "Gems: " + str(gems)
+	wave_label.text = str($EnemyPath.current_wave)
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
@@ -75,6 +87,7 @@ func _unhandled_input(event):
 					add_child(tower_instance)
 					
 					towers[tile_pos] = tower_instance
+					update_merge_indicators()
 
 
 func _on_enemy_path_enemy_leaked() -> void:
@@ -170,6 +183,93 @@ func merge_towers() -> void:
 
 	selected_tower = null
 	tower_actions.hide()
+	
+	update_merge_indicators()
 
 func _on_merge_pressed() -> void:
 	merge_towers()
+
+func update_merge_indicators() -> void:
+	for tile_pos in towers:
+		var tower = towers[tile_pos]
+		var match_count = 0
+		
+		for other_tile_pos in towers:
+			var other_tower = towers[other_tile_pos]
+			
+			if other_tower == tower:
+				continue
+			
+			if other_tower.tower_type == tower.tower_type and other_tower.tier == tower.tier:
+				match_count += 1
+		
+		if tower.tier < 5 and match_count > 0:
+			tower.set_merge_indicator(true, match_count > 1)
+		else:
+			tower.set_merge_indicator(false)
+			
+func reroll_tower() -> void:
+	if selected_tower == null:
+		return
+	
+	var current_tier = selected_tower.tier
+	var reroll_cost = REROLL_COSTS[current_tier]
+	
+	if gems < reroll_cost:
+		return
+	
+	var tower_pool
+	
+	match current_tier:
+		1:
+			tower_pool = tier_1_pool
+		2:
+			tower_pool = tier_2_pool
+		3:
+			tower_pool = tier_3_pool
+		4:
+			tower_pool = tier_4_pool
+		5:
+			tower_pool = tier_5_pool
+	
+	var available_towers = []
+	
+	for tower_scene in tower_pool:
+		var tower = tower_scene.instantiate()
+		
+		if tower.tower_type != selected_tower.tower_type:
+			available_towers.append(tower_scene)
+		
+		tower.queue_free()
+	
+	if available_towers.is_empty():
+		return
+	
+	gems -= reroll_cost
+	
+	var selected_position = selected_tower.position
+	var selected_tile = $Ground.local_to_map(
+		$Ground.to_local(selected_tower.global_position)
+	)
+	
+	selected_tower.queue_free()
+	
+	var new_tower_scene = available_towers.pick_random()
+	var new_tower = new_tower_scene.instantiate()
+	
+	new_tower.position = selected_position
+	add_child(new_tower)
+	
+	towers[selected_tile] = new_tower
+	
+	selected_tower = new_tower
+	
+	update_merge_indicators()
+
+
+func _on_reroll_pressed() -> void:
+	reroll_tower()
+
+
+func _on_gem_timer_timeout() -> void:
+	gems += 1

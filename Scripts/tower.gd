@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var sprite = $Sprite2D
 var glow: Sprite2D
+var merge_indicator: Sprite2D
 
 @export var projectile_scene: PackedScene
 
@@ -23,8 +24,8 @@ var target = null
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Area2D/CollisionShape2D.shape.radius = tower_range * base_range
-	
 	setup_glow()
+	setup_merge_indicator()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -111,4 +112,59 @@ func setup_glow() -> void:
 		5:
 			glow.modulate = Color.RED
 		
-			
+func setup_merge_indicator() -> void:
+	merge_indicator = Sprite2D.new()
+	merge_indicator.texture = sprite.texture
+	merge_indicator.show_behind_parent = true
+	merge_indicator.scale = sprite.scale * 1.15
+	merge_indicator.visible = false
+	
+	var shader = Shader.new()
+	shader.code = """
+	
+shader_type canvas_item;
+
+uniform vec4 outline_color : source_color = vec4(1.0);
+
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	
+	if (tex.a > 0.0) {
+		COLOR = vec4(0.0);
+		return;
+	}
+	
+	float alpha = 0.0;
+	float thickness = 0.03;
+	
+	for (float x = -1.0; x <= 1.0; x += 1.0) {
+		for (float y = -1.0; y <= 1.0; y += 1.0) {
+			alpha = max(alpha, texture(TEXTURE, UV + vec2(x, y) * thickness).a);
+		}
+	}
+	
+	COLOR = vec4(outline_color.rgb, alpha);
+}
+
+"""
+	
+	var material = ShaderMaterial.new()
+	material.shader = shader
+	merge_indicator.material = material
+	
+	add_child(merge_indicator)
+	
+func set_merge_indicator(enabled:bool, multiple_matches: bool = false) -> void:
+	if not enabled:
+		merge_indicator.visible = false
+		return
+		
+	merge_indicator.visible = true
+	
+	var material = merge_indicator.material as ShaderMaterial
+	
+	if multiple_matches:
+		merge_indicator.modulate = Color.GREEN
+		
+	else:
+		merge_indicator.modulate = Color.WHITE
