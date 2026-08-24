@@ -48,7 +48,7 @@ func _unhandled_input(event):
 						
 						var matching_tower = find_matching_tower()
 
-						if matching_tower:
+						if matching_tower and selected_tower.tier < 5:
 							merge.visible = true
 						else:
 							merge.visible = false

@@ -1,5 +1,7 @@
 extends Node2D
 
+@onready var sprite = $Sprite2D
+
 @export var projectile_scene: PackedScene
 
 @export var tower_type: String = "basic"
@@ -85,3 +87,4 @@ func attack(target):
 	projectile.global_position = global_position
 	projectile.target = target
 	projectile.damage = attack_damage
+	

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://de5wd7dyjw2r7"]
+
+[ext_resource type="Script" path="res://Scripts/tower.gd" id="1_ukn4m"]
+[ext_resource type="PackedScene" uid="uid://kvfxfluaiixs" path="res://Scenes/projectile.tscn" id="2_cmwrp"]
+[ext_resource type="Texture2D" uid="uid://dkx7n4w3sfb83" path="res://art/Higgs sit.png" id="3_hp8mb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hwvtw"]
+radius = 100.0
+
+[node name="Tower" type="Node2D"]
+script = ExtResource("1_ukn4m")
+projectile_scene = ExtResource("2_cmwrp")
+tower_type = "alert"
+tier = 3
+attack_damage = 200.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(0.0353278, 0.0372091)
+texture = ExtResource("3_hp8mb")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_hwvtw")
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

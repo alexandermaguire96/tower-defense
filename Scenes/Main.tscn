@@ -1,14 +1,19 @@
-[gd_scene load_steps=11 format=4 uid="uid://dkoyv6jurs3r8"]
+[gd_scene load_steps=16 format=4 uid="uid://dkoyv6jurs3r8"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_x866i"]
-[ext_resource type="PackedScene" uid="uid://d3udiepjk801b" path="res://Scenes/Tower.tscn" id="2_hbm1o"]
+[ext_resource type="PackedScene" uid="uid://d3udiepjk801b" path="res://Scenes/TowerScenes/Tower.tscn" id="2_hbm1o"]
 [ext_resource type="TileSet" uid="uid://cro255nnhikxm" path="res://TileSets/GroundTileSet.tres" id="2_jqh66"]
 [ext_resource type="Script" path="res://Scripts/tile_highlight.gd" id="3_f3tg5"]
 [ext_resource type="PackedScene" uid="uid://dfcpanvfaiolw" path="res://Scenes/Enemy.tscn" id="3_hscgk"]
-[ext_resource type="PackedScene" uid="uid://bxhwt70ygynm3" path="res://Scenes/FastTower.tscn" id="3_yompe"]
-[ext_resource type="PackedScene" uid="uid://bvvvuaf04x1sd" path="res://Scenes/Tower_2.tscn" id="4_ubwwm"]
+[ext_resource type="PackedScene" uid="uid://bxhwt70ygynm3" path="res://Scenes/TowerScenes/FastTower.tscn" id="3_yompe"]
+[ext_resource type="PackedScene" uid="uid://bvvvuaf04x1sd" path="res://Scenes/TowerScenes/Tower_2.tscn" id="4_ubwwm"]
 [ext_resource type="Script" path="res://Scripts/enemy_path.gd" id="5_5ase0"]
+[ext_resource type="PackedScene" uid="uid://byluduq516qes" path="res://Scenes/TowerScenes/Tower_2_2.tscn" id="5_tft3j"]
+[ext_resource type="PackedScene" uid="uid://bchfttj22br5b" path="res://Scenes/TowerScenes/Tower_2_3.tscn" id="6_2a60k"]
+[ext_resource type="PackedScene" uid="uid://bbg4r23lok43b" path="res://Scenes/TowerScenes/Tower_3.tscn" id="7_3n5gj"]
 [ext_resource type="PackedScene" uid="uid://dag2m0xenpa2r" path="res://Scenes/boss.tscn" id="7_7ul00"]
+[ext_resource type="PackedScene" uid="uid://de5wd7dyjw2r7" path="res://Scenes/TowerScenes/Tower_3_2.tscn" id="8_srgj1"]
+[ext_resource type="PackedScene" uid="uid://cl6ajniswekvw" path="res://Scenes/TowerScenes/Tower_4.tscn" id="9_k0gga"]
 
 [sub_resource type="Curve2D" id="Curve2D_wfkrj"]
 _data = {
@@ -19,7 +24,9 @@ point_count = 15
 [node name="Main" type="Node2D"]
 script = ExtResource("1_x866i")
 tier_1_pool = Array[PackedScene]([ExtResource("3_yompe"), ExtResource("2_hbm1o")])
-tier_2_pool = Array[PackedScene]([ExtResource("4_ubwwm")])
+tier_2_pool = Array[PackedScene]([ExtResource("4_ubwwm"), ExtResource("5_tft3j"), ExtResource("6_2a60k")])
+tier_3_pool = Array[PackedScene]([ExtResource("7_3n5gj"), ExtResource("8_srgj1")])
+tier_4_pool = Array[PackedScene]([ExtResource("9_k0gga")])
 
 [node name="TileHighlight" type="Node2D" parent="." node_paths=PackedStringArray("tile_map")]
 z_index = 100

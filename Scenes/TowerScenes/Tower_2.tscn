@@ -10,13 +10,14 @@ radius = 100.0
 [node name="Tower" type="Node2D"]
 script = ExtResource("1_s7mwh")
 projectile_scene = ExtResource("2_b6j7k")
+tower_type = "tiger"
 tier = 2
 attack_damage = 140.0
 crit_chance = 10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
-scale = Vector2(0.15, 0.159)
+scale = Vector2(0.178386, 0.189089)
 texture = ExtResource("3_4tula")
 
 [node name="Area2D" type="Area2D" parent="."]
