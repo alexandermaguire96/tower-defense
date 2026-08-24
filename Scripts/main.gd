@@ -102,6 +102,9 @@ func add_coins(amount: int) -> void:
 	coins += amount
 	
 func find_matching_tower() -> Node2D:
+	var matching_tower = null
+	var farthest_distance = -1.0
+	
 	for tile_pos in towers:
 		var tower = towers[tile_pos]
 		
@@ -109,9 +112,13 @@ func find_matching_tower() -> Node2D:
 			continue
 			
 		if tower.tower_type == selected_tower.tower_type and tower.tier == selected_tower.tier:
-			return tower
+			var distance = selected_tower.global_position.distance_to(tower.global_position)
 			
-	return null
+			if distance > farthest_distance:
+				farthest_distance = distance
+				matching_tower = tower
+				
+	return matching_tower
 
 func merge_towers() -> void:
 	var matching_tower = find_matching_tower()
